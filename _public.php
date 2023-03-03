@@ -1,18 +1,18 @@
 <?php
-# -- BEGIN LICENSE BLOCK ----------------------------------
-#
-# This file is part of myPostCategoryIf, a plugin for Dotclear 2.
-#
-# Copyright (c) 2003-2015 Adjaya and contributors
-# Licensed under the GPL version 2.0 license.
-# See LICENSE file or
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-#
-# -- END LICENSE BLOCK ------------------------------------
+/**
+ * @brief MyPostCategoryIf, a plugin for Dotclear 2
+ *
+ * @package Dotclear
+ * @subpackage Plugin
+ *
+ * @author Benoît Grelier and contributors
+ *
+ * @copyright GPL-2.0 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ */
 if (!defined('DC_RC_PATH')) { return; }
 
 # Add tp: MyPostCategoryIf
-$GLOBALS['core']->tpl->addBlock('MyPostCategoryIf',array('tplMyPostCategoryIf','MyPostCategoryIf'));
+dcCore::app()->tpl->addBlock('MyPostCategoryIf',array('tplMyPostCategoryIf','MyPostCategoryIf'));
 	
 class tplMyPostCategoryIf
 {
@@ -43,14 +43,14 @@ class tplMyPostCategoryIf
 			
 			foreach ($urls as $k => $url)
 			{
-				$cats_if[] = '($_ctx->posts->cat_url '.$compar_cat_op.' "'.$url.'")';
+				$cats_if[] = '(dcCore::app()->ctx->posts->cat_url '.$compar_cat_op.' "'.$url.'")';
 			}
 			$if[] = '('.implode(' '.$cats_if_op.' ',$cats_if).')';
 		}
 		
 		if (isset($attr['has_entries'])) {
 			$sign = (boolean) $attr['has_entries'] ? '>' : '==';
-			$if[] = '$_ctx->categories->nb_post '.$sign.' 0';
+			$if[] = 'dcCore::app()->ctx->categories->nb_post '.$sign.' 0';
 		}
 		
 		if (!empty($if)) {
